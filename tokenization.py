@@ -8,7 +8,6 @@ with open('testToken.py') as file:   # open file
         line = file.readline()  # read next line
         lineList.append(line)    # add line to list
 
-    #print(lineList)              # print list
 file.close()                    # close file
 
 #now remove the comments
@@ -60,10 +59,6 @@ possibleDelimiters = {
      ","
 }
 
-# go though the line untill find a space or delimiter
-# append every char then check if a keyword if not then a identifier
-# should be going char to char!!!!
-
 #funciton to find keywords operators and delimiters
 def findPossible(possibleType,type,str):
      for x in possibleType:
@@ -75,11 +70,7 @@ lineStr = ""
 for line in lineList:
     for i in range(len(line)):
         lineStr+=line[i]
-
-
-
-#find identifiers
-
+    lineStr += " "
 
 #find literals (quotes)
 firstQuoteIndex = 0
@@ -102,11 +93,6 @@ for i in range(len(lineStr)):
           literals.add(findQuote(firstQuoteIndex,secondQuoteIndex, lineStr))
 for z in literals:
      lineStr = lineStr.replace(z, " ")
-    # need to find numbers
-    #does not work for numbers larger than 9
-for i in lineStr:
-     if i.isdigit():
-          literals.add(i)
 
 #find keywords operators and delimiters
 findPossible(possibleKeywords,keywords,lineStr)
@@ -125,16 +111,18 @@ for x in delimiters:
      newLineStr = newLineStr.replace(x, ' ')
 for x in literals:
      newLineStr = newLineStr.replace(x, ' ')
-newLineStr = newLineStr.strip()
 possibleStr = newLineStr.split(" ")
 
 for y in possibleStr:
      if y != '':
-          identifiers.add(y)
+          if y.isdigit():
+               literals.add(y)
+          else:
+               identifiers.add(y)
 
 
 #output 1
-print("\n\n\n\n--------Output 1--------")
+print("--------Output 1--------")
 for line in lineList:
      print(line)
 print("\n")
