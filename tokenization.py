@@ -1,0 +1,159 @@
+#open the file and read what is in it
+with open('testToken.py') as file:   # open file
+    lineList =list()             # make a list
+
+    line = file.readline()      # read line
+    lineList.append(line)        # add line to list
+    while line:                 # loop while line is not empty
+        line = file.readline()  # read next line
+        lineList.append(line)    # add line to list
+
+    #print(lineList)              # print list
+file.close()                    # close file
+
+#now remove the comments
+noCommnetsList =[]    # new list wihtout commnets
+for x in lineList:
+       j = x.split("#",1)
+       noCommnetsList.append(j[0])
+lineList=noCommnetsList
+
+#remove \n from string
+noNewlineList =[]
+for x in lineList:
+       j = x.split("\n",1)
+       noNewlineList.append(j[0])
+lineList=noNewlineList
+
+#get rid of '' in list
+shortenedList =[]
+for x in lineList:
+      x=x.strip()
+      if x != '':
+        shortenedList.append(x)
+lineList=shortenedList
+
+#now tokenize----------------------------
+#to add to set user .add
+keywords = set()
+identifiers = set()
+operators = set()
+delimiters = set()
+literals = set()
+
+possibleKeywords = {
+     "def",
+     "return",
+     "print",
+     "if"
+}
+possibleOperators = {
+     "=",
+     "==",
+     "+",
+     "-"
+}
+possibleDelimiters = {
+     "(",
+     ")",
+     ":",
+     ","
+}
+
+# go though the line untill find a space or delimiter
+# append every char then check if a keyword if not then a identifier
+# should be going char to char!!!!
+
+#funciton to find keywords operators and delimiters
+def findPossible(possibleType,type,str):
+     for x in possibleType:
+          if x in str:
+               type.add(x)
+
+#all lines into one string
+lineStr = ""
+for line in lineList:
+    for i in range(len(line)):
+        lineStr+=line[i]
+
+
+
+#find identifiers
+
+
+#find literals (quotes)
+firstQuoteIndex = 0
+secondQuoteIndex = 0
+quoteFound = False
+
+def findQuote(first, second, wordString):
+     quoteFound = ""
+     for i in range(first, second+1):
+          quoteFound += wordString[i]
+     return quoteFound
+
+for i in range(len(lineStr)):
+     if lineStr[i]=='"' and quoteFound == False:
+          firstQuoteIndex = i
+          quoteFound = True
+     elif lineStr[i] == '"' and quoteFound == True:
+          secondQuoteIndex = i
+          quoteFound = False
+          literals.add(findQuote(firstQuoteIndex,secondQuoteIndex, lineStr))
+for z in literals:
+     lineStr = lineStr.replace(z, " ")
+    # need to find numbers
+    #does not work for numbers larger than 9
+for i in lineStr:
+     if i.isdigit():
+          literals.add(i)
+
+#find keywords operators and delimiters
+findPossible(possibleKeywords,keywords,lineStr)
+findPossible(possibleOperators,operators,lineStr)
+findPossible(possibleDelimiters,delimiters,lineStr)
+
+
+
+#find identifyers here?
+newLineStr = lineStr
+for x in keywords:
+     newLineStr = newLineStr.replace(x, ' ')
+for x in operators:
+     newLineStr = newLineStr.replace(x, ' ')
+for x in delimiters:
+     newLineStr = newLineStr.replace(x, ' ')
+for x in literals:
+     newLineStr = newLineStr.replace(x, ' ')
+newLineStr = newLineStr.strip()
+possibleStr = newLineStr.split(" ")
+
+for y in possibleStr:
+     if y != '':
+          identifiers.add(y)
+
+
+#output 1
+print("\n\n\n\n--------Output 1--------")
+for line in lineList:
+     print(line)
+print("\n")
+
+#output 2
+
+#Keywords       def, return, print, if
+#Identifiers    add, a, b, result
+#Operators      =, +, ==
+#Delimiters     (, ), :, ,
+#Literals       5, 3, __main__, Sum:
+'''
+print("--------Output 2--------")
+print(" __________________________")
+'''
+print("|Keywords    | ",keywords," |")
+print("|Identifiers | ",identifiers," |")
+print("|Operators   | ",operators," |")
+print("|Delimiters  | ",delimiters," |")
+print("|Literals    | ",literals," |")
+
+
