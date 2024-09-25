@@ -127,17 +127,9 @@ for line in lineList:
      print(line)
 print("\n")
 
-#output 2
 
-#Keywords       def, return, print, if
-#Identifiers    add, a, b, result
-#Operators      =, +, ==
-#Delimiters     (, ), :, ,
-#Literals       5, 3, __main__, Sum:
-'''
 print("--------Output 2--------")
 print(" __________________________")
-'''
 print("|Keywords    | ",keywords," |")
 print("|Identifiers | ",identifiers," |")
 print("|Operators   | ",operators," |")
