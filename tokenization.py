@@ -130,10 +130,10 @@ print("\n")
 
 print("--------Output 2--------")
 print(" __________________________")
-print("|Keywords    | ",keywords," |")
-print("|Identifiers | ",identifiers," |")
-print("|Operators   | ",operators," |")
-print("|Delimiters  | ",delimiters," |")
-print("|Literals    | ",literals," |")
+print("Keywords    | ",keywords)
+print("Identifiers | ",identifiers)
+print("Operators   | ",operators)
+print("Delimiters  | ",delimiters)
+print("Literals    | ",literals)
 
 
