@@ -119,6 +119,7 @@ for y in possibleStr:
                literals.add(y)
           else:
                identifiers.add(y)
+          
 
 
 #output 1
@@ -130,10 +131,10 @@ print("\n")
 
 print("--------Output 2--------")
 print(" __________________________")
-print("Keywords    | ",keywords)
-print("Identifiers | ",identifiers)
-print("Operators   | ",operators)
-print("Delimiters  | ",delimiters)
-print("Literals    | ",literals)
+print("Keywords    | ",', '.join(keywords))
+print("Identifiers | ",', '.join(identifiers))
+print("Operators   | ",', '.join(operators))
+print("Delimiters  | ",', '.join(delimiters))
+print("Literals    | ",', '.join(literals))
 
 
