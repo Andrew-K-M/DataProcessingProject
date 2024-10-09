@@ -17,12 +17,15 @@ identifiers = set()
 operators = set()
 delimiters = set()
 literals = set()
-commnets = set()
+comments = set()
 
 possibleKeywords = {
      "def",
      "return",
-     "if" 
+     "if",
+     "for",
+     "range",
+     "in"
 }
 possibleOperators = {
      "=",
@@ -38,7 +41,9 @@ possibleDelimiters = {
 }
 
 #open the file and read what is in it
-with open(input("Input File Name: ")) as file:
+#with open(input("Input File Name: ")) as file:
+with open("example2.py") as file:
+
     lineList =list()
 
     line = file.readline()
@@ -61,10 +66,30 @@ noCommnetsList =[]
 for x in lineList:
        j = x.split("#",1)
        if len(j) == 2:
-          commnets.add("#"+j[1])
+          comments.add("#"+j[1])
        noCommnetsList.append(j[0])
 lineList=noCommnetsList
-     #implement for (""") type comments
+
+#implement for (""") type comments
+noComList = []
+commentFound = ""
+commentBool = False
+for x in lineList:
+     j = x.split('"""',1)    
+     if len(j) == 2 and commentBool == False:
+          commentBool = True
+          commentFound +=j[1]
+     elif len(j) == 2 and commentBool == True:
+          commentBool = False
+     if commentBool == True:
+          commentFound += j[0]
+for x in lineList:
+     j = x.split('"""',1) 
+     if j[0] not in commentFound:
+          noComList.append(j[0])
+lineList = noComList
+comments.add('""" '+commentFound+' """')
+
 
 #get rid of '' in list
 shortenedList =[]
@@ -99,14 +124,11 @@ for z in literals:
      lineStr = lineStr.replace(z, " ")
 
 #find keywords operators and delimiters
-findPossible(possibleKeywords,keywords,lineStr)
 findPossible(possibleOperators,operators,lineStr)
 findPossible(possibleDelimiters,delimiters,lineStr)
 
 #find identifyers here
 newLineStr = lineStr
-for x in keywords:
-     newLineStr = newLineStr.replace(x, ' ')
 for x in operators:
      newLineStr = newLineStr.replace(x, ' ')
 for x in delimiters:
@@ -114,11 +136,12 @@ for x in delimiters:
 for x in literals:
      newLineStr = newLineStr.replace(x, ' ')
 possibleStr = newLineStr.split(" ")
-
 for y in possibleStr:
      if y != '':
           if y.isdigit():
                literals.add(y)
+          elif y in possibleKeywords:
+               keywords.add(y)
           else:
                identifiers.add(y)
           
@@ -134,4 +157,4 @@ print("Identifiers | ",', '.join(identifiers))
 print("Operators   | ",', '.join(operators))
 print("Delimiters  | ",', '.join(delimiters))
 print("Literals    | ",', '.join(literals))
-print("Comments    | ",', '.join(commnets))
+print("Comments    | ",', '.join(comments))
