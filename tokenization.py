@@ -17,11 +17,11 @@ identifiers = set()
 operators = set()
 delimiters = set()
 literals = set()
+commnets = set()
 
 possibleKeywords = {
      "def",
      "return",
-     "print",
      "if" 
 }
 possibleOperators = {
@@ -38,7 +38,7 @@ possibleDelimiters = {
 }
 
 #open the file and read what is in it
-with open('testToken.py') as file:
+with open(input("Input File Name: ")) as file:
     lineList =list()
 
     line = file.readline()
@@ -48,12 +48,6 @@ with open('testToken.py') as file:
         lineList.append(line)
 file.close()
 
-#now remove the comments
-noCommnetsList =[]
-for x in lineList:
-       j = x.split("#",1)
-       noCommnetsList.append(j[0])
-lineList=noCommnetsList
 
 #remove \n from string
 noNewlineList =[]
@@ -61,6 +55,16 @@ for x in lineList:
        j = x.split("\n",1)
        noNewlineList.append(j[0])
 lineList=noNewlineList
+
+#now remove the comments
+noCommnetsList =[]
+for x in lineList:
+       j = x.split("#",1)
+       if len(j) == 2:
+          commnets.add("#"+j[1])
+       noCommnetsList.append(j[0])
+lineList=noCommnetsList
+     #implement for (""") type comments
 
 #get rid of '' in list
 shortenedList =[]
@@ -130,3 +134,4 @@ print("Identifiers | ",', '.join(identifiers))
 print("Operators   | ",', '.join(operators))
 print("Delimiters  | ",', '.join(delimiters))
 print("Literals    | ",', '.join(literals))
+print("Comments    | ",', '.join(commnets))
