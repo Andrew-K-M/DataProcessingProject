@@ -41,9 +41,7 @@ possibleDelimiters = {
 }
 
 #open the file and read what is in it
-#with open(input("Input File Name: ")) as file:
-with open("example2.py") as file:
-
+with open(input("Input File Name: ")) as file:
     lineList =list()
 
     line = file.readline()
