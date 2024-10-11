@@ -86,7 +86,8 @@ for x in lineList:
      if j[0] not in commentFound:
           noComList.append(j[0])
 lineList = noComList
-comments.add('""" '+commentFound+' """')
+if commentFound != "":
+     comments.add('""" '+commentFound+' """')
 
 
 #get rid of '' in list
